@@ -1,0 +1,27 @@
+{
+  "name": "movie-app",
+  "version": "1.0.0",
+  "description": "Movie Application",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crispinandrade/movie-app.git"
+  },
+  "author": "Crispin Andrade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crispinandrade/movie-app/issues"
+  },
+  "homepage": "https://github.com/crispinandrade/movie-app#readme",
+  "devDependencies": {
+    "karma": "^5.2.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^4.0.1"
+  }
+}
