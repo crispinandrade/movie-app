@@ -1,13 +1,25 @@
 angular.module('omdb', [])
-    .factory('omdbApi', () => {
+    .factory('omdbApi', ($http, $q) => {
         var service = {};
+        var baseUrl = 'http://www.omdbapi.com/?v=1&';
         
+        var httpPromise = (url) => {
+            var deferred = $q.defer();
+            $http.get(url)
+                .then((data) => {
+                    deferred.resolve(data);
+                    console.log("HELOOOOOO1111:   ");
+                });
+                console.log("HELOOOOOO:   " + deferred.promise);
+            return deferred.promise;
+        }
+
         service.search = (query) => {
-            return {"Title":"Batman","Year":"1989","Rated":"PG-13","Released":"23 Jun 1989","Runtime":"126 min","Genre":"Action, Adventure","Director":"Tim Burton","Writer":"Bob Kane (Batman characters), Sam Hamm (story), Sam Hamm (screenplay), Warren Skaaren (screenplay)","Actors":"Michael Keaton, Jack Nicholson, Kim Basinger, Robert Wuhl","Plot":"The Dark Knight of Gotham City begins his war on crime with his first major enemy being Jack Napier, a criminal who becomes the clownishly homicidal Joker.","Language":"English, French, Spanish","Country":"USA, UK","Awards":"Won 1 Oscar. Another 8 wins & 26 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.5/10"},{"Source":"Rotten Tomatoes","Value":"71%"},{"Source":"Metacritic","Value":"69/100"}],"Metascore":"69","imdbRating":"7.5","imdbVotes":"333,582","imdbID":"tt0096895","Type":"movie","DVD":"N/A","BoxOffice":"N/A","Production":"Warner Brothers, Guber-Peters Company, PolyGram Filmed Entertainment","Website":"N/A","Response":"True"}
+            return httpPromise(baseUrl + 's=' + query);
         }
 
         service.find = (id) => {
-            return {"Title":"Frozen","Year":"2013","Rated":"PG","Released":"27 Nov 2013","Runtime":"102 min","Genre":"Animation, Adventure, Comedy, Family, Fantasy, Musical","Director":"Chris Buck, Jennifer Lee","Writer":"Jennifer Lee (screenplay by), Hans Christian Andersen (story inspired by: \"The Snow Queen\" by), Chris Buck (story by), Jennifer Lee (story by), Shane Morris (story by)","Actors":"Kristen Bell, Idina Menzel, Jonathan Groff, Josh Gad","Plot":"When the newly crowned Queen Elsa accidentally uses her power to turn things into ice to curse her home in infinite winter, her sister Anna teams up with a mountain man, his playful reindeer, and a snowman to change the weather condition.","Language":"English, Norwegian","Country":"USA","Awards":"Won 2 Oscars. Another 79 wins & 59 nominations.","Poster":"https://m.media-amazon.com/images/M/MV5BMTQ1MjQwMTE5OF5BMl5BanBnXkFtZTgwNjk3MTcyMDE@._V1_SX300.jpg","Ratings":[{"Source":"Internet Movie Database","Value":"7.4/10"},{"Source":"Rotten Tomatoes","Value":"90%"},{"Source":"Metacritic","Value":"75/100"}],"Metascore":"75","imdbRating":"7.4","imdbVotes":"564,642","imdbID":"tt2294629","Type":"movie","DVD":"N/A","BoxOffice":"N/A","Production":"Walt Disney Animation","Website":"N/A","Response":"True"}
+            return httpPromise(baseUrl + 'i=' + id);
         }
 
         return service;
