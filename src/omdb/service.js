@@ -6,11 +6,9 @@ angular.module('omdb', [])
         var httpPromise = (url) => {
             var deferred = $q.defer();
             $http.get(url)
-                .then((data) => {
-                    deferred.resolve(data);
-                    console.log("HELOOOOOO1111:   ");
+                .then((response) => {
+                    deferred.resolve(response.data);
                 });
-                console.log("HELOOOOOO:   " + deferred.promise);
             return deferred.promise;
         }
 

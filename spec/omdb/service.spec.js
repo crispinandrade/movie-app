@@ -14,7 +14,7 @@ describe('omdb service', () => {
     }));
 
     it('should return batman data', () => {
-        var response = {};
+        var data = {};
         // var expectedURL = (url) => {
         //     return url.indexOf('http://www.omdbapi.com/?v=1&s=batman') !== -1;
         // };
@@ -24,12 +24,12 @@ describe('omdb service', () => {
             .respond(200, movieData);
 
         omdbApi.search('batman')
-            .then((data) => {
-                response = data;
+            .then((response) => {
+                data = response;
             });
 
         $httpBackend.flush();
-        expect(response).toEqual(movieData);
+        expect(data).toEqual(movieData);
     });
 
     // it('should return data by id', () => {
