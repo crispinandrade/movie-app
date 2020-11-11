@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "angular": "^1.8.0",
-    "angular-mocks": "^1.8.2"
+    "angular-mocks": "^1.8.2",
+    "angular-resource": "^1.8.2"
   }
 }
