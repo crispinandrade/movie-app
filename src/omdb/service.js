@@ -8,6 +8,9 @@ angular.module('omdb', [])
             $http.get(url)
                 .then((response) => {
                     deferred.resolve(response.data);
+                })
+                .catch(() => {
+                    deferred.reject();
                 });
             return deferred.promise;
         }

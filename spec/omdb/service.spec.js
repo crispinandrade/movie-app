@@ -32,7 +32,41 @@ describe('omdb service', () => {
         expect(data).toEqual(movieData);
     });
 
-    // it('should return data by id', () => {
-    //     expect(omdbApi.search('batman')).toEqual(movieData);
-    // });
+    it('should return data by id', () => {
+        var data = {};
+        var expectedURL = 'http://www.omdbapi.com/?v=1&i=tt2294629';
+
+        $httpBackend.expect('GET', expectedURL)
+            .respond(200, movieData);
+
+        omdbApi.find(movieDataById)
+            .then((response) => {
+                data = response;
+            });
+
+        $httpBackend.flush();
+        expect(data).toEqual(movieData);
+    });
+
+    it('should handle error 500', () => {
+        var data = {};
+        // var expectedURL = (url) => {
+        //     return url.indexOf('http://www.omdbapi.com/?v=1&s=batman') !== -1;
+        // };
+        var expectedURL = 'http://www.omdbapi.com/?v=1&s=batman';
+
+        $httpBackend.expect('GET', expectedURL)
+            .respond(500, movieData);
+
+        omdbApi.search('batman')
+            .then((response) => {
+                data = response;
+            })
+            .catch(() => {
+                data = 'error';
+            });
+
+        $httpBackend.flush();
+        expect(data).toEqual('error');
+    });
 });
