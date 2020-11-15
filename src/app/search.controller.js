@@ -1,5 +1,5 @@
 // movieCore module is a dependency for the movieApp module
-angular.module('movieApp', [])
+angular.module('movieApp')
     .controller('SearchController', ['$scope', '$location', function($scope, $location) {
         $scope.search = () => {
             if ($scope.query) {

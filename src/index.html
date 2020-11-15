@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="movieApp">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Movie App</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <style type="text/css">
+            .container {
+                max-width: 900px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="header">
+            <div class="container">
+                <div class="page-header">
+                    <h1><a href="#/">MovieApp</a></h1>
+                    <p class="lead">Your Resource for Movie Data.</p>
+                </div>
+                <div ng-controller="SearchController">
+                    <form action="" class="form-inline-lg" ng-submit="search()">
+                        <div class="input-group">
+                            <input type="text"class="form-control" placeholder="Film title..." ng-model="query" >
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" ng-click="search()">Go!</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div ng-view=""></div>
+        </div>
+
+        <div class="footer">
+            
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.2/angular-route.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
+
+        <script type="text/javascript" src="app/app.js"></script>
+        <script type="text/javascript" src="omdb/service.js"></script>
+        <script type="text/javascript" src="app/search.controller.js"></script>
+        <script type="text/javascript" src="app/results.controller.js"></script>
+    </body>
+</html>
