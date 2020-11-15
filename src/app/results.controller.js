@@ -1,8 +1,13 @@
 // movieCore module is a dependency for the movieApp module
 angular.module('movieApp')
-    .controller('ResultsController', ['$scope', '$location', function($scope, $location) {
-        $scope.results = [];
-        $scope.results.push({ data: { Title: 'Batman Begins' }});
-        $scope.results.push({ data: { Title: 'The Dark Knight' }});
-        $scope.results.push({ data: { Title: 'The Dark Knight Rises' }});
+    .controller('ResultsController', ['$scope', '$location', 'omdbApi', function($scope, $location, omdbApi) {
+        var query = $location.search().q;
+
+        omdbApi.search(query)
+            .then((response) => {
+                $scope.results = response;
+            })
+            .catch(() => {
+                $scope.errorMessage = 'Results was rejected';
+            });
     }]);

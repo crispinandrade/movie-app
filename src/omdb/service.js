@@ -10,6 +10,7 @@ angular.module('omdb', [])
                     deferred.resolve(response.data);
                 })
                 .catch(() => {
+                    this.errorMessage = 'Search was rejected';
                     deferred.reject();
                 });
             return deferred.promise;

@@ -1,6 +1,5 @@
 describe('Results Controller', () => {
-    var results = {
-        "Search": [
+    var results = [
             {
                 "Title":"Batman Begins",
                 "Year":"2005",
@@ -19,23 +18,62 @@ describe('Results Controller', () => {
                 "imdbID":"tt1345836",
                 "Type":"movie"
             }
-        ]
-    };
+        ];
 
-    var $controller, $scope;
+    var $controller, 
+        $scope,
+        $q,
+        $location,
+        omdbApi;
 
+    beforeEach(module('omdb'));
     beforeEach(module('movieApp'));
 
-    beforeEach(inject((_$controller_, _$rootScope_) => {
+    beforeEach(inject((_$controller_, _$rootScope_, _$q_, _$location_, _omdbApi_) => {
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
+        $q = _$q_;
+        $location = _$location_;
+        omdbApi = _omdbApi_;
 
-        var controller = $controller('ResultsController', { $scope: $scope});
+        // why doesn't this work in beforeEach?
+        // $controller('ResultsController', { $scope: $scope, $rootScope: $rootScope, $location: $location, omdbApi: omdbApi});
     }));
 
-    it('should loead search results', () => {
-        expect($scope.results[0].data.Title).toBe(results.Search[0].Title);
-        expect($scope.results[1].data.Title).toBe(results.Search[1].Title);
-        expect($scope.results[2].data.Title).toBe(results.Search[2].Title);
+    it('should load search results', () => {
+        spyOn(omdbApi, 'search').and.callFake(function() {
+            var deferred = $q.defer();
+            deferred.resolve(results);
+            
+            return deferred.promise;
+        });
+
+        $controller('ResultsController', { $scope: $scope, omdbApi: omdbApi });
+
+        $location.search({'q': 'batman'});
+
+        $scope.results = results;
+        expect($scope.results[0].Title).toBe(results[0].Title);
+        expect($scope.results[1].Title).toBe(results[1].Title);
+        expect($scope.results[2].Title).toBe(results[2].Title);
+
+        expect($location.absUrl()).toContain('q=batman')
+    });
+
+    it('should set result status to error', () => {
+        spyOn(omdbApi, 'search').and.callFake(function() {
+            var deferred = $q.defer();
+            deferred.reject();
+            
+            return deferred.promise;
+        });
+
+        $controller('ResultsController', { $scope: $scope, omdbApi: omdbApi });
+
+        $location.search({'q': 'batman'});
+        $scope.$apply();
+        
+        expect($scope.errorMessage).toBe('Results was rejected');
+        
     });
 });

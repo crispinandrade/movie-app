@@ -4,13 +4,15 @@ describe('Search Controller', () => {
     var $controller;
     var $scope;
     var $location;
+    var $timeout;
 
-    beforeEach(inject((_$controller_, _$rootScope_, _$location_) => {
+    beforeEach(inject((_$controller_, _$rootScope_, _$location_, _$timeout_) => {
         $controller = _$controller_;
         $scope = _$rootScope_.$new();
         $location = _$location_;
+        $timeout = _$timeout_;
 
-        var controller = $controller('SearchController', { $scope: $scope, $location: $location});
+        $controller('SearchController', { $scope: $scope, $location: $location, $timeout: $timeout});
     }));
 
     it('should redirect to results page', () => {
@@ -25,5 +27,30 @@ describe('Search Controller', () => {
         $scope.search();
         
         expect($location.url()).toBe('');
+    });
+
+    it('should be redirected after 1 second of keyboard inactivity', () => {
+        $scope.query = 'batman';
+        $scope.keyup();
+        $timeout.flush();
+
+        expect($timeout.verifyNoPendingTasks).not.toThrow();
+        expect($location.url()).toBe('/results?q=batman');
+    });
+
+    it('should cencel timeout on keydown', () => {
+        $scope.query = 'batman';
+        $scope.keyup();
+        $scope.keydown();
+
+        expect($timeout.verifyNoPendingTasks).not.toThrow();
+    });
+
+    it('should cencel timeout on search', () => {
+        $scope.query = 'batman';
+        $scope.keyup();
+        $scope.search();
+
+        expect($timeout.verifyNoPendingTasks).not.toThrow();
     });
 });

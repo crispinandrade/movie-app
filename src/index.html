@@ -22,7 +22,7 @@
                 <div ng-controller="SearchController">
                     <form action="" class="form-inline-lg" ng-submit="search()">
                         <div class="input-group">
-                            <input type="text"class="form-control" placeholder="Film title..." ng-model="query" >
+                            <input type="text"class="form-control" placeholder="Film title..." ng-model="query" ng-keyup="keyup()" ng-keydown="keydown()">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button" ng-click="search()">Go!</button>
                             </span>
@@ -41,6 +41,8 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js"></script>
+        <!-- <script src="../node_modules/angular/angular.min.js"></script> -->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-route/1.8.2/angular-route.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.6/ui-bootstrap-tpls.min.js"></script>
 
