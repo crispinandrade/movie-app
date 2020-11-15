@@ -24,7 +24,7 @@ describe('Results Controller', () => {
 
     var $controller, $scope;
 
-    beforeEach(module('app'));
+    beforeEach(module('movieApp'));
 
     beforeEach(inject((_$controller_, _$rootScope_) => {
         $controller = _$controller_;
