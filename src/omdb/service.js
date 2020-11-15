@@ -1,5 +1,5 @@
 angular.module('omdb', [])
-    .factory('omdbApi', ($http, $q) => {
+    .factory('omdbApi', function($http, $q) {
         var service = {};
         var baseUrl = 'http://www.omdbapi.com/?v=1&';
         
