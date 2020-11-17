@@ -10,6 +10,6 @@ describe('Movie Result Directive', () => {
 
     it('should output movie result to expected HTML format', () => {
         var html;
-        expect(html).toBe('<div>Banman</div>');
+        expect(html).toBe('<div>Batman</div>');
     });
 });
